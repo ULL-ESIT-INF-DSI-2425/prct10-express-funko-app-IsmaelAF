@@ -3,10 +3,10 @@ import { describe, expect, test, vi } from "vitest";
 import fs from "fs";
 import path from "path";
 
-import {Funko} from "../../src/ejercicio-1/Funko"
-import { FunkoGenero } from "../../src/ejercicio-1/enums/FunkoGenero";
-import { FunkoTipo } from "../../src/ejercicio-1/enums/FunkoTipo";
-import {FunkoManager} from "../../src/ejercicio-1/FunkoManager"
+import {Funko} from "../../src/ejercicio-2/Funko"
+import { FunkoGenero } from "../../src/ejercicio-2/enums/FunkoGenero";
+import { FunkoTipo } from "../../src/ejercicio-2/enums/FunkoTipo";
+import {FunkoManager} from "../../src/ejercicio-2/FunkoManager"
 
 
 const consoleSpy = vi.spyOn(console, 'log');

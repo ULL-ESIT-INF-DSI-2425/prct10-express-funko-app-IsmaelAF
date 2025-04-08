@@ -1,84 +1,101 @@
-import net from 'net';
-import { RequestType } from './RequestType.js';
-import { ResponseType } from './ResponseType.js';
+import express from 'express';
+import { FunkoType } from './types/FunkoType.js';
+import { FunkoGenre } from './types/FunkoGenre.js';
 import { Funko } from './Funko.js';
-import { FunkoManager } from './FunkoManager.js';
-import chalk from 'chalk';
 
-const server = net.createServer({allowHalfOpen: true},(connection) => {
-    console.log("Un cliente se ha conectado.");
-    //console.log(connection);
-
-    let requestData = '';
-    connection.on('data', (chunk) => {
-        requestData += chunk.toString();
-    });
-
-    
+import bodyParser from 'body-parser';
 
 
-    connection.on('end', () => {
-        const request: RequestType = JSON.parse(requestData.toString());
-        const manager = new FunkoManager(request.user);
-        let response: ResponseType;
+export const app = express();
 
-        switch (request.type) {
-            case 'add':
-                let bol: boolean = manager.addFunko(request.funkoPop!);
+app.use(bodyParser.json());
 
-                if(bol === false) {
-                    response = {type: 'add', success: false};
-                } else if(bol === true) {
-                    response = {type: 'add', success: true};
-                } else {
-                    response = {type: 'add', success: false};
-                }
-                
+// GET  query       LEER O LISTA
+app.get('/funkos', (req, res) => {
+    console.log(req.query);
+    const username: string = req.query.user as string;
+    const id = req.query.id ? Number(req.query.id) : null;
 
-                break;
-            case 'list':
-                //let mes = manager.listarFunkos();
-                let mes = manager.listarFunkos();
-                if (mes === true || mes === false) {
-                    response = {type: 'list', success: false};
-                } else {
-                    response = {type: 'list', success: true, funkoPops: mes};
-                }
-                //response = {type: 'list', success: true, funkoPops: mes}
-                break;
-            case 'read':
-                let mesg = manager.mostrarFunko(request.id!);
-                if (mesg === true || mesg === false) {
-                    response = {type: 'read', success: false};
-                } else {
-                    response = {type: 'read', success: true, funkoPops: mesg};
-                }
-                break;
-            case 'update':
-                let messag = manager.actualizarFunko(request.funkoPop!);
-                if(messag === false) {
-                    response = {type: 'update', success: false};
-                } else if (messag === true) {
-                    response = {type: 'update', success: true};
-                } else {
-                    response = {type: 'update', success: false};
-                }
-
-                break;
-            case 'remove':
-                let mess = manager.eliminarFunko(request.id!);
-                
-               response = {type: 'remove', success: mess};
-                break;
-            default:
-                response = {type: request.type, success:false};
-                break;
+    if (id !== null) {
+        const existeFunko = true; // metodo readFunko(username, id)
+        if (!existeFunko) {
+            // respuesta error: Funko no encontrado
         }
-        connection.write(JSON.stringify(response));
-        connection.end();
-    })
+        // mensaje success con funko
+    }
+
+    const listaFunkos = true; // metodo listarFunkos(username)
+    // mensaje success con lista de funkos
+
+    res.send("ejemplo get");
 });
 
-server.listen(60300, () => {
-    console.log("Esperando por clientes para conectarse.");
+//POST  body        AÑADIR
+app.post('/funkos', (req, res) => {
+    const username: string = req.query.user as string;
+    //const funko = Funko.fromJson(req.body);
+    const funko1 = new Funko(
+        req.body.id,
+        req.body.nombre,
+        req.body.descripcion,
+        req.body.tipo,
+        req.body.genero,
+        req.body.franquicia,
+        req.body.numero,
+        req.body.exclusivo,
+        req.body.caracteristicas,
+        req.body.valor
+    );
+    const existe = true; //metodo readFunko(username, funko.id)
+    if(existe){
+        // mensaje error: ya existe
+    }
+    // metodo writeFunko(username, funko)
+    // mensaje sucess, funko añadido
+    
+    //res.send("ejemplo post");
+    console.log(funko1);
+    res.json(funko1);
+});
+
+//DELETE    body    ELIMINAR
+app.delete('/funkos', (req, res) => {
+    const username: string = req.query.user as string;
+    const id = req.body.id;
+    const eliminado = true;//metodo deleteFunko(username, id)
+
+    if(!eliminado){
+        //mensaje success false, funko no se elimino
+    }
+    //mensaje success true, funko eliminado
+    res.send("ejemplo delete");
+});
+
+//PATCH query(buscar)+body(modificar)   MODIFICAR
+app.patch('/funkos', (req, res) => {
+    const username: string = req.query.username as string;
+    const funko1 = new Funko(
+        req.body.id,
+        req.body.nombre,
+        req.body.descripcion,
+        req.body.tipo,
+        req.body.genero,
+        req.body.franquicia,
+        req.body.numero,
+        req.body.exclusivo,
+        req.body.caracteristicas,
+        req.body.valor
+    );
+    const existe = true; //metodo existeFunko(user, funko.id);
+    if(!existe) {
+        //mensaje success falso, funko no existe
+    }
+    // metodo escribir funko
+    // mensaje success true, funko modificado
+    res.send("ejemplo patch");
+});
+
+
+app.listen(3000, () => {
+    console.log('Server is up on port 3000');
 });
