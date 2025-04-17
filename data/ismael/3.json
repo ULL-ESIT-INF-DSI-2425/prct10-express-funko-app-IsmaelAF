@@ -1,12 +1,11 @@
 {
   "id": 3,
-  "nombre": "nonuevoe2",
-  "descripcion": "The best Sonic Funko ever,",
+  "nombre": "nombre1",
+  "descripcion": "desc",
   "tipo": "Pop!",
   "genero": "Videojuegos",
-  "Franquicia": "Franquicia1",
   "numero": 1,
   "exclusivo": false,
-  "caracteristicas": "caracteristica1",
-  "valor": 10
+  "caracteristicas": "none",
+  "valor": 25
 }

@@ -14,7 +14,7 @@ export class Funko {
         public caracteristicas: string,
         public valor: number
     ) {
-        if ( typeof id !== 'number') {
+        /*if ( typeof id !== 'number') {
             throw new Error("Id debe ser un number");
         }
         if ( typeof nombre !== 'string') {
@@ -22,7 +22,7 @@ export class Funko {
         }
         if (valor < 0) {
             throw new Error("Valor de mercado debe ser positivo.");
-        }
+        }*/
     }
 
     static fromJson(data: any): Funko {

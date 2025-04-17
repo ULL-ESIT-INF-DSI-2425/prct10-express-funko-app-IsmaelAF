@@ -1,0 +1,36 @@
+GET
+    FUNKO POR ID:   localhost:3000/funkos?user=ismael&id=1
+    FUNKO LISTA:    localhost:3000/funkos?user=ismael
+
+POST
+    ADD FUNKO:      localhost:3000/funkos?user=ismael
+                    body: 
+{
+  "id": 20,
+  "nombre": "nombre1",
+  "descripcion": "desc",
+  "tipo": "Pop!",
+  "genero": "Videojuegos",
+  "Franquicia": "franquicia1",
+  "numero": 1,
+  "exclusivo": false,
+  "caracteristicas": "none",
+  "valor": 25
+}
+
+DELETE
+    localhost:3000/funkos?user=ismael
+
+{
+  "id": 20,
+  "nombre": "nombre1",
+  "descripcion": "desc",
+  "tipo": "Pop!",
+  "genero": "Videojuegos",
+  "Franquicia": "franquicia1",
+  "numero": 1,
+  "exclusivo": false,
+  "caracteristicas": "none",
+  "valor": 25
+}
+
